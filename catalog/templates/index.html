@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1> Главная страница</h1>
+
+    <p>Добро пожаловать в <em>Мир книг</em>, Это простенький веб-сайт, написанный мной(Никитой Шаталовым) на
+        веб-фреемворке Django. Разработан на ЯП Python в качестве учебного примера для закрепления полученных мною
+        знаний на курсе по Django (^_^).
+    </p>
+
+<h2>Динамический контент</h2>
+
+    <p>База данных сайта Мир книг содержит следующее количество записей:</p>
+    <ul>
+        <li><strong>Количество книг:</strong> {{ num_books }}</li>
+        <li><strong>Количество экземпляров книг:
+        </strong> {{ num_instances }}</li>
+        <li><strong>Количество экземпляров книг в заказе:
+        </strong>{{ num_instances_available }}</li>
+        <li><strong>Количество авторов книг:
+        </strong> {{ num_authors }}</li>
+    </ul>
+{% endblock %}

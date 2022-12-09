@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Book, Author, BookInstance, Genre
+from django.views import generic
 
 
 # Create your views here.
@@ -8,9 +9,12 @@ from .models import Book, Author, BookInstance, Genre
 def index(request):
     num_books = Book.objects.all().count()
     num_instances = BookInstance.objects.all().count()
-    num_instances_available = BookInstance.objects.filter(status_exact=2).count()
+    num_instances_available = BookInstance.objects.count()
 
     num_authors = Author.objects.count()
+
+    num_visits = request.session.get('num_visits', 0)
+    request.session['num_visits'] = num_visits + 1
 
     return render(request, 'index.html',
                   context={'num_books': num_books,
@@ -20,6 +24,14 @@ def index(request):
                            'num_visits': num_visits},
                   )
 
+
+class BookListView(generic.ListView):
+    model = Book
+
+
+class BookDetailView(generic.DetailView):
+    model = Book
+    paginate_by = 3
 
 
 

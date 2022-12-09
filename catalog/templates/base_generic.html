@@ -8,7 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     {% block head %}
         <img src="{% static 'images/logotip.jpg' %}" style="width: 100px; height: 100px;" align="absmiddle">
         <font size=7, color="blue">Сайт "Мир книг"</font>
@@ -21,8 +21,8 @@
             <div class="col-sm-2">
                 {% block sidebar %}
                 <ul class="sidebar-nav">
-                    <li><a href="{% url 'index' %}"> Главная страница</a></li>
-                    <li><a href=""></a>Все книги</li>
+                    <li><a href="{% url 'home' %}">Главная страница</a></li>
+                    <li><a href="{% url 'books' %}">Все книги</a></li>
                     <li><a href=""></a>Все авторы</li>
                 </ul>
                 {% endblock %}

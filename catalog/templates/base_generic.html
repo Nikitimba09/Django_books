@@ -23,15 +23,34 @@
                 <ul class="sidebar-nav">
                     <li><a href="{% url 'home' %}">Главная страница</a></li>
                     <li><a href="{% url 'books' %}">Все книги</a></li>
-                    <li><a href=""></a>Все авторы</li>
+                    <li><a href="{% url 'authors' %}">Все авторы</a></li>
                 </ul>
                 {% endblock %}
             </div>
             <div class="col-sm-10 ">
                 {% block content %} {% endblock %}
+
+            {% block pagination %}
+                {% if is_paginated %}
+                    <div class="pagination">
+                        <span class="page-links">
+                            {% if page_obj.has_previous %}
+                                <a href="{{ request.path }}?page={{page_obj.previous_page_number }}">Предыдущая</a>
+                            {% endif %}
+                        <span class="page-current">
+                            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                        </span>
+                            {% if page_obj.has_next %}
+                                <a href="{{ request.path }}?page={{page_obj.next_page_number }}">Следующая</a>
+                            {% endif %}
+                        </span>
+                    </div>
+  {% endif %}
+{% endblock %}
+
                 {% block footer %}
                     {% block copyright %}
-                <p>Copyright ООО "Люди и книги", 2022. Все права защищены</p>
+                <p>Copyright "GitHub:Nikitimba09", 2022. Все права защищены</p>
                     {% endblock %}
                 {% endblock %}
 

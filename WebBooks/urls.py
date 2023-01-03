@@ -20,6 +20,10 @@ from django.urls import re_path
 
 urlpatterns = [
     path('', views.index, name='home'),
+    path('authors_add/', views.authors_add, name='authors_add'),
+    path('edit1/<int:id>/', views.edit1, name='edit1'),
+    path('create/', views.create, name='create'),
+    path('delete/<int:id>/', views.delete, name='delete'),
     path('admin/', admin.site.urls),
     re_path(r'^books/$', views.BookListView.as_view(), name='books'),
     re_path(r'^books/(?P<pk>\d+)$', views.BookDetailView.as_view(),

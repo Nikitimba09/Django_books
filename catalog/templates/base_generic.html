@@ -24,6 +24,7 @@
                     <li><a href="{% url 'home' %}">Главная страница</a></li>
                     <li><a href="{% url 'books' %}">Все книги</a></li>
                     <li><a href="{% url 'authors' %}">Все авторы</a></li>
+                    <li><a href="{% url 'authors_add' %}">Редактировать авторов</a></li>
                     {% if user.is_authenticated  %}
                         <li>Пользователь: {{ user.get_username }}</li>
                         <li><a href="{% url 'my-borrowed' %}?next={{ request.path }}">Мои заказы</a></li>

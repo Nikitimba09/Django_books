@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import *
+from .forms import AuthorsForm
 from .models import Book, Author, BookInstance, Genre
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -52,3 +53,46 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='2').order_by('due_back')
 
+
+# получение данных из БД и загрузка шаблона authors_add.html
+def authors_add(request):
+    author = Author.objects.all()
+    authorsform = AuthorsForm()
+    return render(request, "catalog/author_add.html",
+                  {'form': authorsform, 'author': author})
+
+
+# сохранение данных об авторе в БД
+def create(request):
+    if request.method == "POST":
+        author = Author()
+        author.first_name = request.POST.get("first_name")
+        author.last_name = request.POST.get("last_name")
+        author.date_of_birth = request.POST.get('date_of_birth')
+        author.date_of_death = request.POST.get("date_of_death")
+        author.save()
+        return HttpResponseRedirect("/authors_add/")
+
+
+# удаление автора из БД
+def delete(request, id):
+    try:
+        author = Author.objects.get(id=id)
+        author.delete()
+        return HttpResponseRedirect("/authors_add/")
+    except Author.DoesNotExist:
+        return HttpResponseNotFound("<h2>Автор не найден</h2>")
+
+
+# изменение данных автора в БД
+def edit1(request, id):
+    author = Author.objects.get(id=id)
+    if request.method == "POST":
+        author.first_name = request.POST.get("first_name")
+        author.last_name = request.POST.get("last_name")
+        author.date_of_birth = request.POST.get('date_of_birth')
+        author.date_of_death = request.POST.get("date_of_death")
+        author.save()
+        return HttpResponseRedirect("/authors_add/")
+    else:
+        return render(request, "edit1.html", {"author" : author})

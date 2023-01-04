@@ -4,6 +4,8 @@ from .forms import AuthorsForm
 from .models import Book, Author, BookInstance, Genre
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 
 # Create your views here.
@@ -29,7 +31,7 @@ def index(request):
 
 class BookListView(generic.ListView):
     model = Book
-    paginate_by = 3
+    paginate_by = 6
 
 
 class BookDetailView(generic.DetailView):
@@ -96,3 +98,20 @@ def edit1(request, id):
         return HttpResponseRedirect("/authors_add/")
     else:
         return render(request, "edit1.html", {"author" : author})
+
+
+class BookCreate(CreateView):
+    model = Book
+    fields = '__all__'
+    success_url = reverse_lazy('books')
+
+
+class BookUpdate(UpdateView):
+    model = Book
+    fields = '__all__'
+    success_url = reverse_lazy('books')
+
+
+class BookDelete(DeleteView):
+    model = Book
+    success_url = reverse_lazy('books')
